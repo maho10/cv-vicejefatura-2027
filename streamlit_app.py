@@ -154,9 +154,6 @@ OPEN_TOURNAMENTS = {
         "COIN",
         "Copa Raptor",
         "DEBATOON",
-        "Abya Yala",
-        "BP Torres",
-        "BP SEPI",
         "TONO",
     ],
 }
