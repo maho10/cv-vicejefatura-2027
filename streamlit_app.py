@@ -77,11 +77,6 @@ OPEN_TOURNAMENTS = {
     "A": [
         "CMUDE",
         "WUDC",
-        "WSDC",
-        "Princeton",
-        "Cambridge",
-        "Oxford",
-        "Doxbridge",
     ],
     "B": [
         "Round Robin Hispanohablante",
