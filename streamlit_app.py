@@ -1420,7 +1420,7 @@ def wizard_form(state_key: str, mode: str, edit_index: int | None = None):
             d.update({
                 "prelim_chair_rounds": prelim,
                 "furthest_round_judged": fr,
-                "role_in_round": rr if fr != "No breakeé" else "",
+                "role_in_round": rr if fr != "No breakeé" or "Break" else "",
             })
 
         elif ach_type == "adjcore_discursos":
