@@ -838,7 +838,7 @@ def validate_single_entry_required_fields(d: dict, typ: str):
         if fr == SELECT:
             raise ValueError(f"Falta: {pretty_field_name('furthest_round_judged')}.")
 
-        if fr != "No breakeé" or "Break":
+        if fr != "No breakeé":
             if str(d.get("role_in_round", SELECT)).strip() == SELECT:
                 raise ValueError(f"Falta: {pretty_field_name('role_in_round')}.")
 
@@ -1420,7 +1420,7 @@ def wizard_form(state_key: str, mode: str, edit_index: int | None = None):
             d.update({
                 "prelim_chair_rounds": prelim,
                 "furthest_round_judged": fr,
-                "role_in_round": rr if fr != "No breakeé" or "Break" else "",
+                "role_in_round": rr if fr != "No breakeé" else "",
             })
 
         elif ach_type == "adjcore_discursos":
