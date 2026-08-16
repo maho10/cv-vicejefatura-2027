@@ -30,7 +30,7 @@ CHAIR_PANEL = ["Chair", "Panel"]
 # Si se elige, no se exige Chair/Panel.
 RONDAS_ELIM_JUEZA = ["No breakeé", "Break", "Octavos", "Cuartos", "Semis", "Final", "Final Novata"]
 RONDAS_ORADORA = ["Octavos", "Cuartos", "Semis", "Final", "Campeón"]
-# Ajusta esta lista a las rondas reales de los torneos de discursos:
+# Ajusta esta lista a las rondas usuales de los torneos de discursos (no sé el break habitual):
 RONDAS_DISCURSISTA = ["Preliminares", "Cuartos", "Semis", "Final", "Campeona"]
 
 USERS_SHEET = "users"
@@ -63,11 +63,14 @@ def pretty_field_name(field_key: str) -> str:
 # =========================================================
 # TIERS: DOS LISTAS INDEPENDIENTES
 #
+# ***SUJETO A CAMBIOS***
+# Esta categorización es mía y se basa en la de anglo
+#
 # 1) OPEN_TOURNAMENTS  -> aplica a "jueza open" y "debatiente"
-# 2) SPEECH_TOURNAMENTS -> aplica a "jueza discursos",
+# 2) DISCURSOS_TOURNAMENTS -> aplica a "jueza discursos",
 #                          "adjudicación discursos" y "discursista"
 #
-# tier_detail puede ser: A, CE, B, DE, C, D, E
+# tier_detail puede ser: A, B, C, D, E
 # tier_guess SIEMPRE colapsa a: A, B, C, D, E (F si es desconocido)
 # =========================================================
 OPEN_TOURNAMENTS = {
@@ -82,23 +85,28 @@ OPEN_TOURNAMENTS = {
     ],
     "B": [
         "Round Robin Hispanohablante",
-        "Round Robin Novato",
         "TODI",
-        "TRD (Torneo Rosarista de Debate)",
-        "CHIDO",
+        "TRD",
         "BP UAM",
         "BP URJC",
+        "CHIDO",
         "TMD",
         "UNED",
         "TIPIS IV",
         "Rosario Open",
+        "Princeton",
+        "Cambridge",
+        "Oxford",
+        "Doxbridge",
+        "MUMUDI",
+        "UNIANDES IV",
         "MED",
+        "WSDC",
         "EUDC",
         "NAUDC",
     ],
     "DE": [
-        "Interpoli",
-        "Elías Ahuja",
+        
     ],
     "C": [
         "TNDE (Nacional de Colombia)",
@@ -108,6 +116,7 @@ OPEN_TOURNAMENTS = {
         "UNIANDES IV",
         "BP Complutense",
         "BP Comunicate",
+        "Yale IV",
     ],
     "D": [
         "TNDE (Nacional de Ecuador)",
@@ -124,7 +133,6 @@ OPEN_TOURNAMENTS = {
         "CMUDE Masters",
         "PUCP Open",
         "Debate UP",
-        "Zimbabwe WSDC",
         "PRE-CMUDE UNIANDES",
         "ADMM Presencial",
         "PUCP IV",
@@ -135,8 +143,8 @@ OPEN_TOURNAMENTS = {
         "BP La Regenta",
         "PRESTIGE OPEN",
         "Copa Borregxs",
-        "Yale IV",
-        "TONO",
+        "Interpoli",
+        "Elías Ahuja",
     ],
     "E": [
         "Toniichan",
@@ -149,13 +157,14 @@ OPEN_TOURNAMENTS = {
         "Abya Yala",
         "BP Torres",
         "BP SEPI",
+        "TONO",
     ],
 }
 
-# ⚠️ PLANTILLA: llena esta lista con los torneos de DISCURSOS reales
+# ⚠️ PLANTILLA: llenar esta lista con los torneos de DISCURSOS reales (NO ME LOS SÉ)
 # y su clasificación. Todo lo que no esté aquí quedará como tier "F"
 # con tier_is_guess = "Sí" (igual que en la app anterior).
-SPEECH_TOURNAMENTS = {
+DISCURSOS_TOURNAMENTS = {
     "A": [
         "CMUDE",
     ],
@@ -191,7 +200,7 @@ TYPES = {
         "label": "Jueza de discursos",
         "ws": "jueza_discursos",
         "max_rows": 10,
-        "scope": "speech",
+        "scope": "discursos",
         "fields": ["year", "tab_link", "name_on_tab", "prelim_chair_rounds",
                    "furthest_round_judged", "role_in_round"],
         # role_in_round es condicional (solo si breakeó), por eso no va aquí:
@@ -201,7 +210,7 @@ TYPES = {
         "label": "Adjudicación de discursos",
         "ws": "adjcore_discursos",
         "max_rows": 10,
-        "scope": "speech",
+        "scope": "discursos",
         "fields": ["year", "tab_link", "name_on_tab", "role"],
         "required": ["tournament", "year", "tab_link", "name_on_tab", "role"],
     },
@@ -209,7 +218,7 @@ TYPES = {
         "label": "Discursista",
         "ws": "discursista",
         "max_rows": 5,
-        "scope": "speech",
+        "scope": "discursos",
         "fields": ["year", "tab_link", "name_on_tab", "furthest_round_reached", "tab_position"],
         "required": ["tournament", "year", "tab_link", "name_on_tab",
                      "furthest_round_reached", "tab_position"],
@@ -554,8 +563,8 @@ def set_new_password(users_ws, email: str, new_password: str):
 # =========================
 def get_tier_map(typ: str) -> dict:
     scope = TYPES.get(typ, {}).get("scope", "")
-    if scope == "speech":
-        return SPEECH_TOURNAMENTS
+    if scope == "discursos":
+        return DISCURSOS_TOURNAMENTS
     if scope == "open":
         return OPEN_TOURNAMENTS
     return {}
