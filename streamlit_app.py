@@ -839,8 +839,9 @@ def validate_single_entry_required_fields(d: dict, typ: str):
             raise ValueError(f"Falta: {pretty_field_name('furthest_round_judged')}.")
 
         if fr != "No breakeé":
-            if str(d.get("role_in_round", SELECT)).strip() == SELECT:
-                raise ValueError(f"Falta: {pretty_field_name('role_in_round')}.")
+            if fr != "Break":
+                if str(d.get("role_in_round", SELECT)).strip() == SELECT:
+                    raise ValueError(f"Falta: {pretty_field_name('role_in_round')}.")
 
     elif typ == "adjcore_discursos":
         if str(d.get("role", SELECT)).strip() == SELECT:
